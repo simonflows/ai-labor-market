@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ИИ и рынок труда: кем быть через 10 лет?</title>
+  <meta name="description" content="Какие профессии исчезают, какие появляются, при чём тут soft skills и что делать студенту колледжа. Проект Мельникова Семёна и Шаповалова Егора, ДВ-12.">
+  <meta name="theme-color" content="#000000">
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- запасная иконка, пока JS не включил анимированную -->
+  <link rel="icon" id="favicon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='12' fill='%23fff'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@300;400;500;600&family=Unbounded:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <canvas id="space" aria-hidden="true"></canvas>
+  <div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="spot" aria-hidden="true"></div>
+
+  <!-- фильтр для «жидкого» преломления стекла (работает в Chromium) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquid" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="4" result="n"/>
+      <feGaussianBlur in="n" stdDeviation="3" result="b"/>
+      <feDisplacementMap in="SourceGraphic" in2="b" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <header class="nav glass" id="nav">
+    <a href="#top" class="brand" aria-label="В начало">
+      <span class="orb"><i></i></span>
+      <span class="brand-t">ИИ&nbsp;/&nbsp;Труд</span>
+    </a>
+    <nav class="links">
+      <a href="#trend">Тренд</a>
+      <a href="#jobs">Профессии</a>
+      <a href="#skills">Soft skills</a>
+      <a href="#plan">План</a>
+      <a href="#test">Тест</a>
+      <a href="#end">Авторы</a>
+    </nav>
+    <span class="progress" id="progress"></span>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="chip glass c1"><b>2036</b><span>год, на который мы смотрим</span></div>
+      <div class="chip glass c2"><b>ДВ-12</b><span>Мельников Семён<br>Шаповалов Егор</span></div>
+
+      <div class="hero-in">
+        <div class="pill glass rv"><i class="dot"></i> Проект · группа ДВ-12</div>
+
+        <h1 class="title" id="title">
+          <span data-line class="l1">Искусственный интеллект</span>
+          <span data-line class="l2">и рынок труда</span>
+          <em data-line class="l3">Кем быть через 10 лет?</em>
+        </h1>
+
+        <p class="lead rv" style="--d:.9s">
+          Нейросети уже пишут тексты, рисуют картинки и отвечают клиентам в чатах.
+          Мы разобрались, каким профессиям от этого плохо, каким хорошо
+          и что делать, если тебе сейчас 17 и ты учишься в колледже.
+        </p>
+
+        <div class="actions rv" style="--d:1.1s">
+          <a href="#trend" class="btn primary"><span>Читать</span></a>
+          <a href="#plan" class="btn glass"><span>Сразу к плану</span></a>
+        </div>
+
+        <p class="by rv" style="--d:1.3s">Работу выполнили <strong>Мельников Семён</strong> и <strong>Шаповалов Егор</strong>, группа <strong>ДВ-12</strong></p>
+      </div>
+
+      <div class="planet" aria-hidden="true"></div>
+      <a href="#trend" class="scroll" aria-label="Листать вниз"><i></i></a>
+    </section>
+
+    <!-- ================= 01 ТРЕНД ================= -->
+    <section class="sec" id="trend">
+      <div class="wrap">
+        <p class="eyebrow rv">01 / Что вообще происходит</p>
+        <h2 class="rv">Работа не кончается.<br><em>Она переезжает</em></h2>
+
+        <div class="two">
+          <div class="text rv">
+            <p>Когда в новостях пишут «ИИ заберёт все профессии», звучит жутко. Мы полезли читать, что говорят сами исследователи, и картина оказалась и спокойнее, и интереснее.</p>
+            <p>Всемирный экономический форум в отчёте 2025 года прикинул: к 2030 году появится около 170 миллионов новых рабочих мест, а около 92 миллионов пропадёт. Если вычесть, получается плюс. Но есть подвох: люди в этих двух списках разные. Кассиру не так просто стать специалистом по данным за пару выходных.</p>
+            <p>И ещё одно отличие от прошлых волн автоматизации. Раньше машины забирали физический труд, станки и конвейеры. Теперь под удар попали офисные задачи: повторяющиеся, по правилам, за компьютером. То есть как раз те, куда многие шли «потому что надёжно».</p>
+          </div>
+
+          <div class="stats">
+            <div class="stat glass rv" style="--d:.1s">
+              <b><span data-count="170">0</span><small> млн</small></b>
+              <span>новых рабочих мест к 2030 году</span>
+            </div>
+            <div class="stat glass rv" style="--d:.2s">
+              <b><span data-count="92">0</span><small> млн</small></b>
+              <span>мест, которые исчезнут</span>
+            </div>
+            <div class="stat glass rv" style="--d:.3s">
+              <b><span data-count="39">0</span><small>%</small></b>
+              <span>рабочих навыков изменятся за те же годы</span>
+            </div>
+          </div>
+        </div>
+        <p class="note rv">Данные: World Economic Forum, The Future of Jobs Report 2025. Это прогноз, а не приговор, цифры могут и сдвинуться.</p>
+      </div>
+    </section>
+
+    <!-- ================= 02 ПРОФЕССИИ ================= -->
+    <section class="sec" id="jobs">
+      <div class="wrap">
+        <p class="eyebrow rv">02 / Кто уходит, кто приходит</p>
+        <h2 class="rv">Три списка<br><em>профессий</em></h2>
+        <p class="sub rv">Мы разделили профессии на три группы. Шкала «риск» и «спрос» — это наша оценка по материалам исследований, а не точная наука, поэтому не воспринимайте её как приговор.</p>
+
+        <div class="tabs glass rv" id="tabs" role="tablist">
+          <span class="ind"></span>
+          <button role="tab" data-tab="out" class="on">Сокращаются</button>
+          <button role="tab" data-tab="mid">Меняются</button>
+          <button role="tab" data-tab="up">Растут</button>
+        </div>
+
+        <div class="cards rv" id="cards" aria-live="polite" style="--d:.1s"></div>
+      </div>
+    </section>
+
+    <!-- ================= 03 SOFT SKILLS ================= -->
+    <section class="sec" id="skills">
+      <div class="wrap">
+        <p class="eyebrow rv">03 / Soft skills</p>
+        <h2 class="rv">Навыки,<br><em>которые не скачать</em></h2>
+
+        <div class="two">
+          <div class="text rv">
+            <p>Soft skills, или гибкие навыки, это всё, что не привязано к конкретной программе или станку: как ты думаешь, общаешься, договариваешься и держишься, когда всё идёт не по плану. Hard skills это, например, «умею работать в 1С» или «умею варить трубы».</p>
+            <p>Узкие навыки стареют быстро, особенно сейчас. Гибкие при смене работы остаются с тобой. Поэтому работодатели всё чаще смотрят на них не меньше, чем на диплом. В том же отчёте WEF в топе навыков на ближайшие годы стоят аналитическое мышление, устойчивость и гибкость.</p>
+            <p>Нажми на любой навык справа, там коротко: почему с ним у робота проблемы и как его тренировать на обычной студенческой жизни.</p>
+          </div>
+
+          <div class="skills rv">
+            <div class="skill-list" id="skillList"></div>
+            <div class="skill-panel glass" id="skillPanel"></div>
+          </div>
+        </div>
+
+        <aside class="quote glass rv">
+          <p>«Нейросеть может написать идеальное письмо с извинениями. Но извиняться всё равно придётся человеку».</p>
+          <span>Фраза, к которой мы пришли в процессе подготовки проекта</span>
+        </aside>
+
+        <p class="aside rv">
+          Оговорка. Сначала мы думали, что эмпатия — это «железно человеческое». Потом посмотрели, как чат-боты утешают людей, и стало не так уверенно. Честнее сказать так: ИИ умеет изображать понимание, но у него нет ничего на кону. А у человека есть, и людям это важно, когда на другом конце решается что-то серьёзное.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= 04 ПЛАН ================= -->
+    <section class="sec" id="plan">
+      <div class="wrap">
+        <p class="eyebrow rv">04 / План для студента колледжа</p>
+        <h2 class="rv">Что делать,<br><em>пока тебе 17–20</em></h2>
+        <p class="sub rv">Без магии. Никто не знает, как будет выглядеть рынок в 2036-м, поэтому план держится не на «выучи вот это», а на привычках, которые пригодятся в любом сценарии. Отмечай пункты, прогресс сохранится в браузере.</p>
+
+        <div class="plan-grid">
+          <div class="plan-side glass rv">
+            <div class="ring">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle cx="60" cy="60" r="52" class="bg"/>
+                <circle cx="60" cy="60" r="52" class="fg" id="ringFg"/>
+              </svg>
+              <b id="ringNum">0%</b>
+            </div>
+            <p id="ringMsg">Пока пусто, но все с этого начинали</p>
+            <button class="reset" id="reset">Сбросить</button>
+          </div>
+
+          <div class="plan-list" id="planList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 05 ТЕСТ ================= -->
+    <section class="sec" id="test">
+      <div class="wrap">
+        <p class="eyebrow rv">05 / Мини-тест</p>
+        <h2 class="rv">Насколько твоя работа<br><em>под прицелом?</em></h2>
+        <p class="sub rv">Это не научный тест, а игрушка, чтобы подумать. Представь профессию (свою будущую или чью-то ещё) и подвигай ползунки.</p>
+
+        <div class="test glass rv">
+          <div class="sliders">
+            <label>
+              <span class="lab">Сколько в работе повторяющихся действий <output id="o1">50</output></span>
+              <input type="range" min="0" max="100" value="50" id="s1">
+            </label>
+            <label>
+              <span class="lab">Сколько живого общения с людьми <output id="o2">50</output></span>
+              <input type="range" min="0" max="100" value="50" id="s2">
+            </label>
+            <label>
+              <span class="lab">Как часто бывают нестандартные ситуации <output id="o3">50</output></span>
+              <input type="range" min="0" max="100" value="50" id="s3">
+            </label>
+          </div>
+
+          <div class="result">
+            <small>Индекс рутинности</small>
+            <b id="score">50</b>
+            <div class="gauge"><i id="gauge"></i></div>
+            <p id="verdict"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 06 ВЫВОД И АВТОРЫ ================= -->
+    <section class="sec end" id="end">
+      <div class="wrap">
+        <p class="eyebrow rv">06 / Вместо вывода</p>
+        <h2 class="rv">Что мы поняли,<br><em>пока делали этот проект</em></h2>
+        <div class="text rv">
+          <p>Если коротко, бояться стоит не искусственного интеллекта, а момента, когда перестаёшь учиться. Профессии из списков выше через десять лет, скорее всего, будут называться иначе. А умение быстро разобраться в новом и договориться с живыми людьми пригодится в любой из них.</p>
+          <p>Кем мы станем, пока не знаем. Но теперь точно уверены, что выбирать профессию по названию бессмысленно. Лучше смотреть, какие задачи в ней остаются человеческими, и идти туда.</p>
+        </div>
+
+        <div class="team-wrap" id="team">
+          <div class="team-head rv">
+            <p class="eyebrow">Команда проекта · ДВ-12</p>
+            <h3>Кто что делал</h3>
+          </div>
+
+          <div class="team-grid">
+            <div class="team-card glass rv" style="--d:.08s">
+              <span class="team-badge">Разработка и интерактив</span>
+              <h4 class="team-name">Мельников Семён</h4>
+              <span class="team-role-sub">студент группы ДВ-12</span>
+              <div class="team-tasks-title">Вклад в проект:</div>
+              <ul class="team-tasks">
+                <li>Архитектура и верстка веб-сайта в эстетике Liquid Glass</li>
+                <li>Интерактивные механики: динамический фильтр профессий и карточки Soft skills</li>
+                <li>Разработка калькулятора «Индекс рутинности» и трекера плана с сохранением в браузере</li>
+                <li>Canvas-анимация звездного пространства (падающие звезды, интерактивный курсор) и адаптивность</li>
+              </ul>
+            </div>
+
+            <div class="team-card glass rv" style="--d:.22s">
+              <span class="team-badge">Исследование и аналитика</span>
+              <h4 class="team-name">Шаповалов Егор</h4>
+              <span class="team-role-sub">студент группы ДВ-12</span>
+              <div class="team-tasks-title">Вклад в проект:</div>
+              <ul class="team-tasks">
+                <li>Анализ отчёта World Economic Forum («The Future of Jobs Report 2025»)</li>
+                <li>Сбор статистики и классификация профессий (сокращающиеся, трансформирующиеся, растущие)</li>
+                <li>Исследование гибких навыков (Soft skills), формулировка практических тезисов</li>
+                <li>Структурирование материала, подготовка речи и презентации к защите проекта</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p>© 2026 · Мельников Семён, Шаповалов Егор · ДВ-12</p>
+      <p>Источник цифр: <a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/" target="_blank" rel="noopener">WEF, The Future of Jobs Report 2025</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
